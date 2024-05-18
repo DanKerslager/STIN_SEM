@@ -1,8 +1,8 @@
-
 const appID = "&appid=3034449191d7e019ed5ee40277f84796"
 const weatherAPI = "https://api.openweathermap.org/data/2.5/weather?"
 const geoAPI = "https://api.openweathermap.org/geo/1.0/direct?q="
 const currentLocation = ""
+
 
 
 function writeText() {
