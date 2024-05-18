@@ -11,12 +11,10 @@
   <div class="container">
     
     <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
-    <script type="module">
+    <script>
       const Auth0_domain = "dev-cz1xfrqlz4gbz633.us.auth0.com"
       const Auth0_id = "GcpBuKna5egJWpvRWTEfbKFte1mywkA8"
 
-      import { createAuth0Client } from 'https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js';
-      
       let auth0 = null;
 
       const configureClient = async () => {
