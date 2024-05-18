@@ -10,55 +10,62 @@
 <body>
   <div class="container">
     
-    <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
+  <!-- Include Auth0.js library using a <script> tag -->
+    <script src="https://cdn.auth0.com/js/auth0/9.13/auth0.min.js"></script>
   
+    <!-- Include your login script -->
     <script>
       const Auth0_domain = "dev-cz1xfrqlz4gbz633.us.auth0.com";
       const Auth0_id = "GcpBuKna5egJWpvRWTEfbKFte1mywkA8";
-      let auth0 = null;
   
-      const configureClient = async () => {
-        auth0 = await createAuth0Client({
-          domain: Auth0_domain,  
-          client_id: Auth0_id,  
-          redirect_uri: window.location.origin,
+      var auth0 = new auth0.WebAuth({
+        domain: Auth0_domain,
+        clientID: Auth0_id,
+        redirectUri: window.location.origin,
+        responseType: 'token id_token',
+        scope: 'openid profile email',
+      });
+  
+      const handleAuthentication = () => {
+        document.getElementById('login').addEventListener('click', login);
+        document.getElementById('logout').addEventListener('click', logout);
+        auth0.parseHash((err, authResult) => {
+          if (authResult && authResult.accessToken && authResult.idToken) {
+            // Handle successful authentication
+            console.log('Authenticated:', authResult);
+          } else if (err) {
+            // Handle authentication error
+            console.error('Authentication error:', err);
+          }
         });
+      };
   
-        document.getElementById('login').addEventListener('click', async () => {
-          await auth0.loginWithRedirect();
+      const login = () => {
+        auth0.authorize();
+      };
+  
+      const logout = () => {
+        // Redirect to logout endpoint
+        auth0.logout({ returnTo: window.location.origin });
+      };
+  
+      const getUserInfo = () => {
+        // Get user information
+        auth0.client.userInfo(authResult.accessToken, (err, user) => {
+          if (user) {
+            // Display user information
+            console.log('User info:', user);
+          } else if (err) {
+            // Handle error
+            console.error('User info error:', err);
+          }
         });
-  
-        document.getElementById('logout').addEventListener('click', () => {
-          auth0.logout({ returnTo: window.location.origin });
-        });
       };
   
-      const isAuthenticated = async () => {
-        return await auth0.isAuthenticated();
+      window.onload = () => {
+        handleAuthentication();
       };
   
-      const getUser = async () => {
-        const user = await auth0.getUser();
-        console.log(user);
-        return user;
-      };
-  
-      const handleAuth = async () => {
-        const isAuth = await isAuthenticated();
-        if (isAuth) {
-          const user = await getUser();
-          document.getElementById('user').textContent = `Hello, ${user.name}`;
-        }
-      };
-  
-      window.onload = async () => {
-        await configureClient();
-        if (window.location.search.includes('code=') && window.location.search.includes('state=')) {
-          await auth0.handleRedirectCallback();
-          window.history.replaceState({}, document.title, '/');
-        }
-        await handleAuth();
-      };
     </script>
     
 
