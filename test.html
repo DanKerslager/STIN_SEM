@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Input to Page</title>
+</head>
+<body>
+    <form id="myForm">
+        <label for="textInput">Enter text:</label><br>
+        <input type="text" id="textInput" name="textInput"><br>
+        <button type="button" onclick="writeText()">Submit</button>
+    </form>
+
+    <div id="output"></div>
+
+    <script>
+        function writeText() {
+            // Get the input value
+            var inputValue = document.getElementById("textInput").value;
+
+            // Get the div where you want to output the text
+            var outputDiv = document.getElementById("output");
+
+            // Append the input value to the output div
+            outputDiv.innerHTML = "You entered: " + inputValue;
+        }
+    </script>
+</body>
+</html>
