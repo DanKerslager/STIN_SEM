@@ -27,18 +27,21 @@
       });
   
       const handleAuthentication = () => {
-        document.getElementById('login').addEventListener('click', login);
-        document.getElementById('logout').addEventListener('click', logout);
-        auth0.parseHash((err, authResult) => {
-          if (authResult && authResult.accessToken && authResult.idToken) {
-            // Handle successful authentication
-            console.log('Authenticated:', authResult);
-          } else if (err) {
-            // Handle authentication error
-            console.error('Authentication error:', err);
-          }
-        });
-      };
+      auth0.parseHash((err, authResult) => {
+        if (authResult && authResult.accessToken && authResult.idToken) {
+          window.location.hash = '';
+          auth0.client.userInfo(authResult.accessToken, (err, user) => {
+            if (user) {
+              document.getElementById('user').textContent = `Hello, ${user.name}`;
+            } else if (err) {
+              console.error('User info error:', err);
+            }
+          });
+        } else if (err) {
+          console.error('Authentication error:', err);
+        }
+      });
+    };
   
       const login = () => {
         auth0.authorize();
@@ -63,6 +66,8 @@
       };
   
       window.onload = () => {
+        document.getElementById('login').addEventListener('click', login);
+        document.getElementById('logout').addEventListener('click', logout);
         handleAuthentication();
       };
   
