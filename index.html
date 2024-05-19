@@ -6,12 +6,10 @@
   <title>Počasí</title>
   <link rel="stylesheet" href="./index.css">
 
-  <script type="module" src="./index.js" defer></script>
-  <script src="https://cdn.auth0.com/js/auth0/9.13/auth0.min.js"> defer</script>
-  <script type="module" src="./login.js" defer></script>
+  <script type="module" src="./index.js"></script>
+  <script src="https://cdn.auth0.com/js/auth0/9.13/auth0.min.js"></script>
+  <script type="module" src="./login.js"></script>
 </head>
-
-
 
 
 
@@ -26,10 +24,11 @@
     <h1>Počasí</h1>
     <label for="location">Lokace:</label>
     <input type="text" id="location" name="location"><br><br>
-    <button type="button" onclick="writeText()">Najdi</button>
+    <button type="button" id="findButton">Najdi</button>
     <div id="output1"></div>
     <div id="output2"></div>
     <div id="imgContainer"></div>
+    <div id="historical"></div>
   </div>
 </body>
 <footer>
