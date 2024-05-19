@@ -70,7 +70,7 @@ displayFavoriteLocations()
 
 const displayFavoriteLocations = () => {
   const field = document.getElementById("dropdown");
-  field.innerHTML = ''
+  field.innerHTML = '<option value="">Vyber z oblíbených</option>'
   metadata.favorite_locations.forEach(element => {
     const option = document.createElement("option")
     option.textContent = element
