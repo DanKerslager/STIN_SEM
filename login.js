@@ -4,7 +4,7 @@ import { createAuth0Client } from './auth0Client.js';
 const manageToken = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkJZWVVLeWtrVkNIbThETGNfUi1fSCJ9.eyJpc3MiOiJodHRwczovL2Rldi1jejF4ZnJxbHo0Z2J6NjMzLnVzLmF1dGgwLmNvbS8iLCJzdWIiOiJISkpTQ2xOZHBPMDV2Uncwb1lYYlNpOWVDdmtLTVVGZEBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9kZXYtY3oxeGZycWx6NGdiejYzMy51cy5hdXRoMC5jb20vYXBpL3YyLyIsImlhdCI6MTcxNjEzNjQ2MiwiZXhwIjoxNzE2MjIyODYyLCJzY29wZSI6InJlYWQ6dXNlcnMgdXBkYXRlOnVzZXJzIGRlbGV0ZTp1c2VycyBjcmVhdGU6dXNlcnMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJhenAiOiJISkpTQ2xOZHBPMDV2Uncwb1lYYlNpOWVDdmtLTVVGZCJ9.LMzUhKlzc54fXRWe-8A01zffUqXMeUH4knyl-AGxPXz01YK4bt_XJEBZxDK0xcgQSSFrBITfObFX3XbowU8UHnJ3wgMuV6DUGjq5VRNYkc-reqau7xg5rM6FBAbZjiQVdezvlUJGPBC8E3vGqyUcQfOjNH2MRUELTG6FGP4dtUn8XgBIpX3y_bFQL9T4jkVnqJJqVhP0JKmc8AKON9TYhp3qlG6NbbRgLRlAxL10e-dRYpL0E3yPU_LIh1Dj6pxhYkrRGj8PsCBV1HoXTZg-FVL1_kkbp7I0kZE4KymdxO9qLBpvR8Ls549GCtBUe9KvAOlyy13QXSGKzdaWWMBYQA"
 
 let auth0Client;
-let USER;
+let userId;
 let metadata;
 
 const handleAuthentication = () => {
@@ -14,8 +14,9 @@ const handleAuthentication = () => {
       auth0Client.client.userInfo(authResult.accessToken, (err, user) => {
         if (user) {
           document.getElementById("addFavorite").style.display="block"
-          USER = authResult;
+          userId = user.sub;
           metadata = user.metauser_metadata;
+          //console.log(metadata)
           displayFavoriteLocations()
           document.getElementById('user').textContent = `Hello, ${user.name}`;
         } else if (err) {
@@ -30,7 +31,6 @@ const handleAuthentication = () => {
 
 const addFavoriteLocation = async () => {
   const location = document.getElementById('location').value.trim();
-  const userId = USER.idTokenPayload.sub
   const domain = "dev-cz1xfrqlz4gbz633.us.auth0.com"
 
   if (location === '') {
@@ -103,4 +103,4 @@ const initializeAuth0Client = (client) => {
 
 window.onload = () => initializeAuth0Client();
 
-export { handleAuthentication, login, logout, initializeAuth0Client };
+export { handleAuthentication, addFavoriteLocation, displayFavoriteLocations, login, logout, initializeAuth0Client };
