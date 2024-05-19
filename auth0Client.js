@@ -7,8 +7,9 @@ const createAuth0Client = () => {
     domain: Auth0_domain,
     clientID: Auth0_id,
     redirectUri: window.location.origin,
+    audience: 'https://dev-cz1xfrqlz4gbz633.us.auth0.com/userinfo',
     responseType: 'token id_token',
-    scope: 'openid profile email',
+    scope: 'openid profile email user_metadata read:users update:users read:current_user'
   });
 };
 

@@ -62,8 +62,6 @@ async function getWeather(lat, lon) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        console.log(data);
-        console.log(data.main.temp);
         displayIcon(data.weather[0].icon);
     } catch (error) {
         console.error(error);
@@ -72,7 +70,6 @@ async function getWeather(lat, lon) {
 
 function displayIcon(code){
     var imgUrl = "https://openweathermap.org/img/wn/"+code+"@2x.png"
-    console.log(imgUrl)
     const imgElement = document.createElement('img')
     imgElement.src = imgUrl
     const imgfield = document.getElementById('imgContainer')
@@ -124,7 +121,6 @@ async function fetchHistoricalData(lat, lon) {
 }
 
 function displayHistoricalData(historyData) {
-    console.log(historyData);
 
     let tableHeader = `
         <table>
@@ -148,7 +144,6 @@ function displayHistoricalData(historyData) {
 }
 
 function createRow(data) {
-    console.log(data);
     return `
         <tr>
             <td>${data.date}</td>
