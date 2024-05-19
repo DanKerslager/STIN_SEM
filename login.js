@@ -1,55 +1,51 @@
-const Auth0_domain = "dev-cz1xfrqlz4gbz633.us.auth0.com";
-const Auth0_id = "GcpBuKna5egJWpvRWTEfbKFte1mywkA8";
+// login.js
+import createAuth0Client from './auth0Client.js';
 
-var auth0 = new auth0.WebAuth({
-  domain: Auth0_domain,
-  clientID: Auth0_id,
-  redirectUri: window.location.origin,
-  responseType: 'token id_token',
-  scope: 'openid profile email',
-});
+let auth0Client;
 
 const handleAuthentication = () => {
-auth0.parseHash((err, authResult) => {
-  if (authResult && authResult.accessToken && authResult.idToken) {
-    window.location.hash = '';
-    auth0.client.userInfo(authResult.accessToken, (err, user) => {
-      if (user) {
-        document.getElementById('user').textContent = `Hello, ${user.name}`;
-      } else if (err) {
-        console.error('User info error:', err);
-      }
-    });
-  } else if (err) {
-    console.error('Authentication error:', err);
-  }
-});
+  auth0Client.parseHash((err, authResult) => {
+    if (authResult && authResult.accessToken && authResult.idToken) {
+      window.location.hash = '';
+      auth0Client.client.userInfo(authResult.accessToken, (err, user) => {
+        if (user) {
+          document.getElementById('user').textContent = `Hello, ${user.name}`;
+        } else if (err) {
+          console.error('User info error:', err);
+        }
+      });
+    } else if (err) {
+      console.error('Authentication error:', err);
+    }
+  });
 };
 
 const login = () => {
-  auth0.authorize();
+  auth0Client.authorize();
 };
 
 const logout = () => {
-  // Redirect to logout endpoint
-  auth0.logout({ returnTo: window.location.origin });
+  auth0Client.logout({ returnTo: window.location.origin });
 };
 
-const getUserInfo = () => {
-  // Get user information
-  auth0.client.userInfo(authResult.accessToken, (err, user) => {
+const getUserInfo = (accessToken) => {
+  auth0Client.client.userInfo(accessToken, (err, user) => {
     if (user) {
-      // Display user information
       console.log('User info:', user);
     } else if (err) {
-      // Handle error
       console.error('User info error:', err);
     }
   });
 };
 
-window.onload = () => {
+const initializeAuth0Client = (client) => {
+  auth0Client = client || createAuth0Client();
+
   document.getElementById('login').addEventListener('click', login);
   document.getElementById('logout').addEventListener('click', logout);
   handleAuthentication();
 };
+
+window.onload = () => initializeAuth0Client();
+
+export { handleAuthentication, login, logout, getUserInfo, initializeAuth0Client };
