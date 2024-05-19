@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1716105070669" clover="3.2.0">
+  <project timestamp="1716105070669" name="All files">
+    <metrics statements="63" coveredstatements="57" conditionals="21" coveredconditionals="14" methods="13" coveredmethods="12" elements="97" coveredelements="83" complexity="0" loc="63" ncloc="63" packages="1" files="2" classes="2"/>
+    <file name="index.js" path="C:\Users\danke\Downloads\STIN_SEM\index.js">
+      <metrics statements="36" coveredstatements="31" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="4"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="1" type="stmt"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="15" count="1" type="stmt"/>
+      <line num="16" count="1" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="19" count="1" type="stmt"/>
+      <line num="24" count="3" type="stmt"/>
+      <line num="26" count="3" type="stmt"/>
+      <line num="27" count="3" type="stmt"/>
+      <line num="28" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="29" count="0" type="stmt"/>
+      <line num="31" count="2" type="stmt"/>
+      <line num="32" count="2" type="stmt"/>
+      <line num="33" count="0" type="stmt"/>
+      <line num="34" count="0" type="stmt"/>
+      <line num="36" count="3" type="stmt"/>
+      <line num="41" count="2" type="stmt"/>
+      <line num="43" count="2" type="stmt"/>
+      <line num="44" count="2" type="stmt"/>
+      <line num="45" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="46" count="0" type="stmt"/>
+      <line num="48" count="1" type="stmt"/>
+      <line num="49" count="1" type="stmt"/>
+      <line num="50" count="1" type="stmt"/>
+      <line num="51" count="0" type="stmt"/>
+      <line num="53" count="2" type="stmt"/>
+      <line num="58" count="1" type="stmt"/>
+      <line num="59" count="1" type="stmt"/>
+      <line num="60" count="1" type="stmt"/>
+      <line num="61" count="1" type="stmt"/>
+      <line num="62" count="1" type="stmt"/>
+      <line num="63" count="1" type="stmt"/>
+      <line num="64" count="1" type="stmt"/>
+    </file>
+    <file name="login.js" path="C:\Users\danke\Downloads\STIN_SEM\login.js">
+      <metrics statements="27" coveredstatements="26" conditionals="17" coveredconditionals="12" methods="9" coveredmethods="8"/>
+      <line num="6" count="1" type="stmt"/>
+      <line num="7" count="13" type="stmt"/>
+      <line num="8" count="4" type="cond" truecount="5" falsecount="0"/>
+      <line num="9" count="2" type="stmt"/>
+      <line num="10" count="2" type="stmt"/>
+      <line num="11" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="12" count="0" type="stmt"/>
+      <line num="13" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="14" count="1" type="stmt"/>
+      <line num="17" count="2" type="cond" truecount="1" falsecount="1"/>
+      <line num="18" count="2" type="stmt"/>
+      <line num="23" count="1" type="stmt"/>
+      <line num="24" count="1" type="stmt"/>
+      <line num="27" count="1" type="stmt"/>
+      <line num="28" count="1" type="stmt"/>
+      <line num="31" count="1" type="stmt"/>
+      <line num="32" count="3" type="stmt"/>
+      <line num="33" count="2" type="cond" truecount="2" falsecount="0"/>
+      <line num="34" count="1" type="stmt"/>
+      <line num="35" count="1" type="cond" truecount="1" falsecount="1"/>
+      <line num="36" count="1" type="stmt"/>
+      <line num="41" count="1" type="stmt"/>
+      <line num="42" count="9" type="cond" truecount="1" falsecount="1"/>
+      <line num="44" count="9" type="stmt"/>
+      <line num="45" count="9" type="stmt"/>
+      <line num="46" count="9" type="stmt"/>
+      <line num="49" count="1" type="stmt"/>
+    </file>
+  </project>
+</coverage>

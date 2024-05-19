@@ -5,76 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Počasí</title>
   <link rel="stylesheet" href="./index.css">
-  <script src="./index.js" defer></script>
+
+  <script type="module" src="./index.js" defer></script>
+  <script src="https://cdn.auth0.com/js/auth0/9.13/auth0.min.js"> defer</script>
+  <script type="module" src="./login.js" defer></script>
 </head>
+
+
+
+
+
+
 <body>
   <div class="container">
     
-  <!-- Include Auth0.js library using a <script> tag -->
-    <script src="https://cdn.auth0.com/js/auth0/9.13/auth0.min.js"></script>
-  
-    <!-- Include your login script -->
-    <script>
-      const Auth0_domain = "dev-cz1xfrqlz4gbz633.us.auth0.com";
-      const Auth0_id = "GcpBuKna5egJWpvRWTEfbKFte1mywkA8";
-  
-      var auth0 = new auth0.WebAuth({
-        domain: Auth0_domain,
-        clientID: Auth0_id,
-        redirectUri: window.location.origin,
-        responseType: 'token id_token',
-        scope: 'openid profile email',
-      });
-  
-      const handleAuthentication = () => {
-      auth0.parseHash((err, authResult) => {
-        if (authResult && authResult.accessToken && authResult.idToken) {
-          window.location.hash = '';
-          auth0.client.userInfo(authResult.accessToken, (err, user) => {
-            if (user) {
-              document.getElementById('user').textContent = `Hello, ${user.name}`;
-            } else if (err) {
-              console.error('User info error:', err);
-            }
-          });
-        } else if (err) {
-          console.error('Authentication error:', err);
-        }
-      });
-    };
-  
-      const login = () => {
-        auth0.authorize();
-      };
-  
-      const logout = () => {
-        // Redirect to logout endpoint
-        auth0.logout({ returnTo: window.location.origin });
-      };
-  
-      const getUserInfo = () => {
-        // Get user information
-        auth0.client.userInfo(authResult.accessToken, (err, user) => {
-          if (user) {
-            // Display user information
-            console.log('User info:', user);
-          } else if (err) {
-            // Handle error
-            console.error('User info error:', err);
-          }
-        });
-      };
-  
-      window.onload = () => {
-        document.getElementById('login').addEventListener('click', login);
-        document.getElementById('logout').addEventListener('click', logout);
-        handleAuthentication();
-      };
-  
-    </script>
-    
-
-
     <button id="login">Login</button>
     <button id="logout">Logout</button>
     <div id="user"></div>
