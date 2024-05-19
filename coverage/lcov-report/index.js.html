@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">70.27% </span>
+                <span class="strong">71.01% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>52/74</span>
+                <span class='fraction'>49/69</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">69.86% </span>
+                <span class="strong">70.58% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>51/73</span>
+                <span class='fraction'>48/68</span>
             </div>
         
             
@@ -221,13 +221,7 @@
 <a name='L156'></a><a href='#L156'>156</a>
 <a name='L157'></a><a href='#L157'>157</a>
 <a name='L158'></a><a href='#L158'>158</a>
-<a name='L159'></a><a href='#L159'>159</a>
-<a name='L160'></a><a href='#L160'>160</a>
-<a name='L161'></a><a href='#L161'>161</a>
-<a name='L162'></a><a href='#L162'>162</a>
-<a name='L163'></a><a href='#L163'>163</a>
-<a name='L164'></a><a href='#L164'>164</a>
-<a name='L165'></a><a href='#L165'>165</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L159'></a><a href='#L159'>159</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -292,15 +286,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -334,7 +325,6 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -354,7 +344,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -378,7 +367,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -455,9 +443,7 @@ async function getWeather(lat, lon) {
 <span class="cstat-no" title="statement not covered" >            throw new Error('Network response was not ok');</span>
         }
         const data = await response.json();
-        console.log(data);
-        console.log(data.main.temp);
-<span class="cstat-no" title="statement not covered" >        displayIcon(data.weather[0].icon);</span>
+        displayIcon(data.weather[0].icon);
     } catch (error) {
         console.error(error);
     }
@@ -465,7 +451,6 @@ async function getWeather(lat, lon) {
 &nbsp;
 function <span class="fstat-no" title="function not covered" >displayIcon(</span>code){
     var imgUrl = <span class="cstat-no" title="statement not covered" >"https://openweathermap.org/img/wn/"+code+"@2x.png"</span>
-<span class="cstat-no" title="statement not covered" >    console.log(imgUrl)</span>
     const imgElement = <span class="cstat-no" title="statement not covered" >document.createElement('img')</span>
 <span class="cstat-no" title="statement not covered" >    imgElement.src = imgUrl</span>
     const imgfield = <span class="cstat-no" title="statement not covered" >document.getElementById('imgContainer')</span>
@@ -498,7 +483,6 @@ async function fetchHistoricalData(lat, lon) {
 <span class="cstat-no" title="statement not covered" >                alert("City not found");</span>
 <span class="cstat-no" title="statement not covered" >                return;</span>
             }
-&nbsp;
             const { time, temperature_2m_max, temperature_2m_min, rain_sum, showers_sum, snowfall_sum } = data.daily;
             
             historyData.push({
@@ -518,7 +502,6 @@ async function fetchHistoricalData(lat, lon) {
 }
 &nbsp;
 function displayHistoricalData(historyData) {
-    console.log(historyData);
 &nbsp;
     let tableHeader = `
         &lt;table&gt;
@@ -542,7 +525,6 @@ function displayHistoricalData(historyData) {
 }
 &nbsp;
 function createRow(data) {
-    console.log(data);
     return `
         &lt;tr&gt;
             &lt;td&gt;${data.date}&lt;/td&gt;
@@ -562,7 +544,7 @@ export{ writeText, getLocation, getWeather, displayIcon, fetchHistoricalData, di
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-05-19T11:18:52.021Z
+                at 2024-05-19T19:53:44.740Z
             </div>
         <script src="prettify.js"></script>
         <script>

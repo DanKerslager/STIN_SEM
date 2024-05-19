@@ -19,3 +19,10 @@
   button {
     cursor: pointer;
   }
+
+#addFavorite{
+  display: none;
+}
+#dropdown{
+  display: none;
+}
