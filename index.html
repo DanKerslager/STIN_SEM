@@ -10,6 +10,8 @@
   <script src="https://cdn.auth0.com/js/auth0/9.13/auth0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script type="module" src="./login.js"></script>
+  <script src="./script.js"></script>
+
 </head>
 
 
@@ -17,7 +19,24 @@
 
 <body>
   <div class="container">
-    
+    <button id="registerBtn" onclick="showForm()">Register</button>
+
+    <div id="registrationForm" class="hidden">
+      <form id="paymentForm">
+          <label for="email">Email:</label><br>
+          <input type="email" id="email" name="email" required><br><br>
+          <label for="cardNumber">Card Number:</label><br>
+          <input type="text" id="cardNumber" name="cardNumber" required><br><br>
+          <label for="expiry">Expiry Date:</label><br>
+          <input type="text" id="expiry" name="expiry" placeholder="MM/YY" required><br><br>
+          <label for="cvs">CVS:</label><br>
+          <input type="text" id="cvs" name="cvs" required><br><br>
+          <!-- You can add more fields for card details if needed -->
+          <button type="submit">Finish Payment</button>
+      </form>
+      <button onclick="hideForm()">Cancel</button>
+    </div>
+
     <button id="login">Login</button>
     <button id="logout">Logout</button>
     <div id="user"></div>

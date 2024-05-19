@@ -26,3 +26,11 @@
 #dropdown{
   display: none;
 }
+
+#logout{
+  display: none;
+}
+
+.hidden {
+  display: none;
+}
