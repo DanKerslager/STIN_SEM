@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1716104514705" clover="3.2.0">
-  <project timestamp="1716104514705" name="All files">
+<coverage generated="1716105070669" clover="3.2.0">
+  <project timestamp="1716105070669" name="All files">
     <metrics statements="63" coveredstatements="57" conditionals="21" coveredconditionals="14" methods="13" coveredmethods="12" elements="97" coveredelements="83" complexity="0" loc="63" ncloc="63" packages="1" files="2" classes="2"/>
     <file name="index.js" path="C:\Users\danke\Downloads\STIN_SEM\index.js">
       <metrics statements="36" coveredstatements="31" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="4"/>
