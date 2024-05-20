@@ -3,11 +3,12 @@
 //example call: curl -X POST https://pocasitest.netlify.app/.netlify/functions/api -H "Content-Type: application/json" -d "{\"email\":\"dan.kerslager@tul.cz\",\"password\":\"TestTest1\",\"location\":\"New York\"}"
 
 const { AuthenticationClient } = require('auth0');
+const axios = require('axios');
 
 const auth0 = new AuthenticationClient({
     domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
     clientId: 'HJJSClNdpO05vRw0oYXbSi9eCvkKMUFd',
-    //clientSecret: 'Ro_meg_dZnC2No76c61tHeGA46CdSaThHNZ-5AiHdw22GPbTpLFe_kAsaFmC1ohQ'
+    clientSecret: 'Ro_meg_dZnC2No76c61tHeGA46CdSaThHNZ-5AiHdw22GPbTpLFe_kAsaFmC1ohQ'
 });
 
 exports.handler = async function(event, context) {
@@ -25,19 +26,23 @@ exports.handler = async function(event, context) {
             };
         }
 
-        // Authenticate user against Auth0
-        const authResult = await auth0.login({
-            realm: 'Username-Password-Authentication', // This is the default database connection name in Auth0
+        // Use Resource Owner Password Grant to authenticate user
+        const response = await axios.post(`https://${auth0.domain}/oauth/token`, {
+            grant_type: 'password',
             username: email,
             password: password,
             audience: 'https://dev-cz1xfrqlz4gbz633.us.auth0.com/api/v2/',
+            client_id: auth0.clientId,
+            client_secret: auth0.clientSecret,
             scope: 'openid'
         });
+
+        const authResult = response.data;
 
         // Example response
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: 'Authentication successful', user: authResult.user }),
+            body: JSON.stringify({ message: 'Authentication successful', token: authResult.access_token }),
         };
     } catch (error) {
         return {
@@ -46,3 +51,4 @@ exports.handler = async function(event, context) {
         };
     }
 };
+
