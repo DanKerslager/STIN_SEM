@@ -5,11 +5,11 @@
 const { AuthenticationClient } = require('auth0');
 const axios = require('axios');
 
-const auth0 = new AuthenticationClient({
+const auth0Config = {
     domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
     clientId: 'HJJSClNdpO05vRw0oYXbSi9eCvkKMUFd',
     clientSecret: 'Ro_meg_dZnC2No76c61tHeGA46CdSaThHNZ-5AiHdw22GPbTpLFe_kAsaFmC1ohQ'
-});
+};
 
 exports.handler = async function(event, context) {
     try {
@@ -27,13 +27,13 @@ exports.handler = async function(event, context) {
         }
 
         // Use Resource Owner Password Grant to authenticate user
-        const response = await axios.post(`https://${auth0.domain}/oauth/token`, {
+        const response = await axios.post(`https://${auth0Config.domain}/oauth/token`, {
             grant_type: 'password',
             username: email,
             password: password,
             audience: 'https://dev-cz1xfrqlz4gbz633.us.auth0.com/api/v2/',
-            client_id: auth0.clientId,
-            client_secret: auth0.clientSecret,
+            client_id: auth0Config.clientId,
+            client_secret: auth0Config.clientSecret,
             scope: 'openid'
         });
 
@@ -51,4 +51,3 @@ exports.handler = async function(event, context) {
         };
     }
 };
-
