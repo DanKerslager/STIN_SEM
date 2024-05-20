@@ -14,13 +14,13 @@ const handleAuthentication = () => {
       auth0Client.client.userInfo(authResult.accessToken, (err, user) => {
         if (user) {
           document.getElementById("addFavorite").style.display="block"
+          document.getElementById("registerBtn").style.display="none"
+          document.getElementById("login").style.display="none"
+          document.getElementById("logout").style.display="block"
           userId = user.sub;
           metadata = user.metauser_metadata;
-          //console.log(metadata)
           displayFavoriteLocations()
           document.getElementById('user').textContent = `Hello, ${user.name}`;
-        } else if (err) {
-          console.error('User info error:', err);
         }
       });
     } else if (err) {
@@ -32,7 +32,6 @@ const handleAuthentication = () => {
 const addFavoriteLocation = async () => {
   const location = document.getElementById('location').value.trim();
   const domain = "dev-cz1xfrqlz4gbz633.us.auth0.com"
-
   if (location === '') {
     console.error('Empty location');
     return;
@@ -46,8 +45,8 @@ const addFavoriteLocation = async () => {
     console.error('Location already exists in favorites');
     return;
   }
-  metadata.favorite_locations.push(location)
 
+  metadata.favorite_locations.push(location)
   var newData={
     "user_metadata": metadata
   }

@@ -37,9 +37,6 @@ async function getLocation(location) {
     
     try {
         const response = await fetch(requestString);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
         const data = await response.json();
         const latitude = data[0].lat;
         const longitude = data[0].lon;
@@ -99,6 +96,7 @@ async function fetchHistoricalData(lat, lon) {
 
         results.forEach(data => {
             if (data.cod === '404') {
+                console.log("off")
                 alert("City not found");
                 return;
             }

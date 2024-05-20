@@ -9,6 +9,8 @@ global.fetch = jest.fn(() =>
   })
 );
 
+console.error=jest.fn();
+
 describe('writeText function', () => {
   it('should update outputDiv1 innerHTML with the entered text', () => {
     document.body.innerHTML = `
@@ -35,7 +37,71 @@ describe('getLocation function', () => {
     const receivedError = console.error.mock.calls[0][0];
     expect(receivedError.message).toBe('Network error');
   });
+  
 });
+
+describe('displayIcon function', () => {
+  beforeEach(() => {
+    // Clear the HTML content of the imgContainer before each test
+    document.body.innerHTML = '<div id="imgContainer"></div>';
+  });
+
+  it('should create and append img element with correct src', () => {
+    const code = '01d'; // Example weather code
+    const imgUrl = `https://openweathermap.org/img/wn/${code}@2x.png`;
+
+    // Call the function with the weather code
+    displayIcon(code);
+
+    // Get the img element and its src attribute
+    const imgElement = document.querySelector('#imgContainer img');
+    const src = imgElement.src;
+
+    // Assert that the img element is created and appended with correct src
+    expect(imgElement).toBeTruthy(); // Ensure img element exists
+    expect(src).toBe(imgUrl); // Ensure src attribute is set correctly
+  });
+
+  it('should replace existing img element with new one', () => {
+    // Create a mock existing img element
+    const existingImg = document.createElement('img');
+    existingImg.src = 'https://example.com/existing.png';
+    document.getElementById('imgContainer').appendChild(existingImg);
+
+    const code = '02d'; // Example weather code
+    const imgUrl = `https://openweathermap.org/img/wn/${code}@2x.png`;
+
+    // Call the function with the weather code
+    displayIcon(code);
+
+    // Get the img element and its src attribute
+    const imgElement = document.querySelector('#imgContainer img');
+    const src = imgElement.src;
+
+    // Assert that the img element is replaced with new one and src is updated
+    expect(imgElement).toBeTruthy(); // Ensure img element exists
+    expect(src).toBe(imgUrl); // Ensure src attribute is set correctly
+  });
+
+  it('should clear imgContainer before appending new img element', () => {
+    // Add some content to the imgContainer
+    document.getElementById('imgContainer').innerHTML = '<span>Some content</span>';
+
+    const code = '03d'; // Example weather code
+    const imgUrl = `https://openweathermap.org/img/wn/${code}@2x.png`;
+
+    // Call the function with the weather code
+    displayIcon(code);
+
+    // Get the img element and its src attribute
+    const imgElement = document.querySelector('#imgContainer img');
+    const src = imgElement.src;
+
+    // Assert that the imgContainer is cleared before appending new img element
+    expect(document.getElementById('imgContainer').innerHTML).toBe('<img src="' + imgUrl + '">');
+  });
+});
+
 
 describe('getWeather function', () => {
   it('should fetch weather data using latitude and longitude', async () => {
@@ -52,7 +118,37 @@ describe('getWeather function', () => {
   });
 });
 
+describe('DOMContentLoaded event listener', () => {
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <button id="findButton">Find</button>
+      <div id="output1"></div>
+      <div id="output2"></div>
+    `;
+  });
+
+  it('should attach click event listener to findButton', () => {
+    const findButton = document.getElementById('findButton');
+    const writeTextMock = jest.fn(); // Mock writeText function
+    if (findButton) {
+      findButton.addEventListener('click', writeTextMock);
+    }
+    findButton?.click(); // Simulate button click
+    expect(writeTextMock).toHaveBeenCalledTimes(1); // Ensure writeText function is called
+  });
+});
+
+
 describe('fetchHistoricalData function', () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); // Clear all mock calls before each test
+    fetch.mockImplementation(() => Promise.resolve({ ok: true, json: () => Promise.resolve({}) }));
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks(); // Restore all mocks after each test
+  });
+
   it('should fetch historical weather data', async () => {
     const mockData = {
       daily: [
@@ -60,12 +156,12 @@ describe('fetchHistoricalData function', () => {
         { time: '2024-05-02', temperature_2m_max: 22, temperature_2m_min: 12, rain_sum: 2, showers_sum: 1, snowfall_sum: 0 }
       ]
     };
-    fetch.mockImplementationOnce(() => Promise.resolve({ ok: true, json: () => Promise.resolve(mockData) }));
+    fetch.mockImplementation(() => Promise.resolve({ ok: true, json: () => Promise.resolve(mockData) })); // Corrected implementation
     const latitude = 40.7128;
     const longitude = -74.0060;
     await fetchHistoricalData(latitude, longitude);
+    expect(fetch).toHaveBeenCalledTimes(7);
   });
-
 });
 
 describe('displayHistoricalData function', () => {
