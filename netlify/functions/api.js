@@ -9,7 +9,7 @@ const webAuth = new auth0.WebAuth({
     domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
     clientID: 'HJJSClNdpO05vRw0oYXbSi9eCvkKMUFd',
     responseType: 'token',
-    redirectUri: window.location.origin, // Replace with your actual callback URL
+    redirectUri: "https://pocasitest.netlify.app/callback", // Replace with your actual callback URL
 });
 
 exports.handler = async function(event, context) {
