@@ -5,44 +5,52 @@
 
 const auth0 = require('auth0-js');
 
-const auth0Client = new auth0.AuthenticationClient({
-  domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
-  clientId: 'HJJSClNdpO05vRw0oYXbSi9eCvkKMUFd',
-  clientSecret: 'Ro_meg_dZnC2No76c61tHeGA46CdSaThHNZ-5AiHdw22GPbTpLFe_kAsaFmC1ohQ'
+const webAuth = new auth0.WebAuth({
+    domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
+    clientID: 'HJJSClNdpO05vRw0oYXbSi9eCvkKMUFd',
+    responseType: 'token',
+    redirectUri: window.location.origin, // Replace with your actual callback URL
 });
 
 exports.handler = async function(event, context) {
     try {
-      const body = JSON.parse(event.body);
-  
-      // Extract user data from the body
-      const { email, password, location } = body;
-  
-      // Check if all required fields are provided
-      if (!email || !password || !location) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({ message: 'Missing required fields' }),
-        };
-      }
-  
-      // Authenticate user against Auth0
-      const authResult = await auth0Client.oauth.passwordGrant({
-        username: email,
-        password: password,
-        //audience: 'https://dev-cz1xfrqlz4gbz633.us.auth0.com/api/v2/',
-        scope: 'openid'
-      });
-  
-      // Example response
-      return {
-        statusCode: 200,
-        body: JSON.stringify({ message: 'Authentication successful', user: authResult.user }),
-      };
+        const body = JSON.parse(event.body);
+
+        // Extract user data from the body
+        const { email, password, location } = body;
+
+        // Check if all required fields are provided
+        if (!email || !password || !location) {
+            return {
+                statusCode: 400,
+                body: JSON.stringify({ message: 'Missing required fields' }),
+            };
+        }
+
+        // Authenticate user using Auth0
+        webAuth.login({
+            realm: 'Username-Password-Authentication', // This is the default database connection name in Auth0
+            username: email,
+            password: password
+        }, (err, authResult) => {
+            if (err) {
+                // Authentication failed, handle error
+                return {
+                    statusCode: 400,
+                    body: JSON.stringify({ message: `Error: ${err.description}` }),
+                };
+            } else {
+                // Authentication successful, handle result
+                return {
+                    statusCode: 200,
+                    body: JSON.stringify({ message: 'Authentication successful', user: authResult }),
+                };
+            }
+        });
     } catch (error) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ message: `Error: ${error.message}` }),
-      };
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ message: `Error: ${error.message}` }),
+        };
     }
-  };
+};
