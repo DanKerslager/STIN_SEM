@@ -7,7 +7,7 @@ const { AuthenticationClient } = require('auth0');
 const auth0 = new AuthenticationClient({
     domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
     clientId: 'HJJSClNdpO05vRw0oYXbSi9eCvkKMUFd',
-    clientSecret: 'Ro_meg_dZnC2No76c61tHeGA46CdSaThHNZ-5AiHdw22GPbTpLFe_kAsaFmC1ohQ'
+    //clientSecret: 'Ro_meg_dZnC2No76c61tHeGA46CdSaThHNZ-5AiHdw22GPbTpLFe_kAsaFmC1ohQ'
 });
 
 exports.handler = async function(event, context) {
@@ -26,7 +26,8 @@ exports.handler = async function(event, context) {
         }
 
         // Authenticate user against Auth0
-        const authResult = await auth0.passwordGrant({
+        const authResult = await auth0.login({
+            realm: 'Username-Password-Authentication', // This is the default database connection name in Auth0
             username: email,
             password: password,
             audience: 'https://dev-cz1xfrqlz4gbz633.us.auth0.com/api/v2/',
