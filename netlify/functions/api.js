@@ -45,9 +45,27 @@ exports.handler = async function(event, context) {
             body: JSON.stringify({ message: 'Authentication successful', token: authResult.access_token }),
         };
     } catch (error) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({ message: `Error: ${error.message}` }),
-        };
+        console.error('Error authenticating with Auth0:', error);
+
+        if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            return {
+                statusCode: error.response.status,
+                body: JSON.stringify({ message: `Error: ${error.response.data.error_description || error.response.data.error}` }),
+            };
+        } else if (error.request) {
+            // The request was made but no response was received
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ message: 'Error: No response received from Auth0' }),
+            };
+        } else {
+            // Something happened in setting up the request that triggered an Error
+            return {
+                statusCode: 500,
+                body: JSON.stringify({ message: `Error: ${error.message}` }),
+            };
+        }
     }
 };
