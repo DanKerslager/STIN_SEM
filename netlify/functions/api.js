@@ -1,23 +1,29 @@
 // netlify/functions/api.js
 exports.handler = async function(event, context) {
-    // Parse the request body
-    const body = JSON.parse(event.body);
+    try {
+      const body = JSON.parse(event.body);
   
-    // Extract data from the body
-    const { key } = body;
+      // Extract user data from the body
+      const { email, password, location } = body;
   
-    // Check if the key is provided
-    if (!key) {
+      // Check if all required fields are provided
+      if (!email || !password || !location) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ message: 'Missing required fields' }),
+        };
+      }
+  
+      // Example response
+      return {
+        statusCode: 200,
+        body: JSON.stringify({ message: `Received user data: ${email}, ${password}, ${location}` }),
+      };
+    } catch (error) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ message: 'Missing key' }),
+        body: JSON.stringify({ message: `Error parsing JSON: ${error.message}` }),
       };
     }
-  
-    // Example response
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: `Received key: ${key}` }),
-    };
   };
   
