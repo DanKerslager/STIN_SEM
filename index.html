@@ -10,11 +10,9 @@
   <script src="https://cdn.auth0.com/js/auth0/9.13/auth0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script type="module" src="./login.js"></script>
-  <script src="./script.js"></script>
+  <script src="script.js"></script>
 
 </head>
-
-
 
 
 <body>
@@ -36,6 +34,16 @@
       </form>
       <button onclick="hideForm()">Cancel</button>
     </div>
+    <script>
+      function showForm() {
+          document.getElementById("registrationForm").classList.remove("hidden");
+      }
+
+      function hideForm() {
+          document.getElementById("registrationForm").classList.add("hidden");
+      }
+
+    </script>
 
     <button id="login">Login</button>
     <button id="logout">Logout</button>
