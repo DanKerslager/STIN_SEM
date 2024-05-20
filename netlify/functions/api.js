@@ -8,7 +8,8 @@ const axios = require('axios');
 const auth0Config = {
     domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
     clientId: 'HJJSClNdpO05vRw0oYXbSi9eCvkKMUFd',
-    clientSecret: 'Ro_meg_dZnC2No76c61tHeGA46CdSaThHNZ-5AiHdw22GPbTpLFe_kAsaFmC1ohQ'
+    clientSecret: 'Ro_meg_dZnC2No76c61tHeGA46CdSaThHNZ-5AiHdw22GPbTpLFe_kAsaFmC1ohQ',
+    connection: 'Username-Password-Authentication'  // Update with your connection name
 };
 
 exports.handler = async function(event, context) {
@@ -34,7 +35,8 @@ exports.handler = async function(event, context) {
             audience: 'https://dev-cz1xfrqlz4gbz633.us.auth0.com/api/v2/',
             client_id: auth0Config.clientId,
             client_secret: auth0Config.clientSecret,
-            scope: 'openid'
+            scope: 'openid',
+            realm: auth0Config.connection  // Specify the connection here
         });
 
         const authResult = response.data;
