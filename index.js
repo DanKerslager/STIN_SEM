@@ -163,4 +163,4 @@ function createRow(data) {
 }
 
 
-module.export{ writeText, getLocation, getWeather, displayIcon, fetchHistoricalData, displayHistoricalData, createRow }
+module.exports = { writeText, getLocation, getWeather, displayIcon, fetchHistoricalData, displayHistoricalData, createRow }
