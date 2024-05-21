@@ -1,10 +1,10 @@
 const axios = require('axios');
-const { handler } = require('./api');
+const { handler } = require('./functions/api');
 
 jest.mock('axios'); // Mock Axios module
 
 // Mock utility functions
-jest.mock('../utils.js', () => ({
+jest.mock('./utils.js', () => ({
     getLocation: jest.fn().mockResolvedValue({ lat: 40.7128, lon: -74.0060 }), // Mock coordinates for New York
     getWeather: jest.fn().mockResolvedValue({ temperature: 72, conditions: 'Sunny' }), // Mock weather data
     fetchHistoricalData: jest.fn().mockResolvedValue({ averageTemperature: 68, conditions: 'Partly Cloudy' }) // Mock historical data
