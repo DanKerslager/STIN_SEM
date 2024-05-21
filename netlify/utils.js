@@ -1,48 +1,9 @@
-// index.js
 
 const appID = "&appid=3034449191d7e019ed5ee40277f84796"
 const weatherAPI = "https://api.openweathermap.org/data/2.5/weather?"
 const geoAPI = "https://api.openweathermap.org/geo/1.0/direct?q="
 const historyAPI = "https://api.open-meteo.com/v1/forecast?"
 const historyAPISet = "&daily=temperature_2m_max,temperature_2m_min,rain_sum,showers_sum,snowfall_sum&timezone=auto&"
-
-
-
-function writeText() {
-    // Get the input value
-    var inputValue = document.getElementById("location").value;
-
-    // Get the div where you want to output the text
-    var outputDiv1 = document.getElementById("output1");
-    var outputDiv2 = document.getElementById("output2");
-    // Append the input value to the output div
-    outputDiv1.innerHTML = "You entered: " + inputValue;
-    //getLocation(inputValue)
-    inputHandler(inputValue)
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const findButton = document.getElementById('findButton');
-    if (findButton) {
-        findButton.addEventListener('click', writeText);
-    } else {
-        console.error("Button with ID 'findButton' not found");
-    }
-});
-
-
-async function inputHandler(location){
-    const coordinates = await getLocation(location)
-    const weatherData = await getWeather(coordinates)
-    displayIcon(weatherData.weather[0].icon)
-    
-    const userDiv = document.getElementById('user');
-    if (userDiv.innerText.trim() !== '') {
-        const historicalData = await fetchHistoricalData(coordinates)
-        displayHistoricalData(historicalData)
-    }
-
-}
 
 async function getLocation(location) {
     var requestString = geoAPI+location+"&limit=1"+appID   
@@ -69,15 +30,6 @@ async function getWeather(coordinates) {
     } catch (error) {
         console.error(error);
     }
-}
-
-function displayIcon(code){
-    var imgUrl = "https://openweathermap.org/img/wn/"+code+"@2x.png"
-    const imgElement = document.createElement('img')
-    imgElement.src = imgUrl
-    const imgfield = document.getElementById('imgContainer')
-    imgfield.innerHTML = ""
-    imgfield.append(imgElement)
 }
 
 async function fetchHistoricalData(coordinates) {
@@ -123,41 +75,3 @@ async function fetchHistoricalData(coordinates) {
         console.error("Error fetching historical data:", error);
     }
 }
-
-function displayHistoricalData(historyData) {
-
-    let tableHeader = `
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Max Temp</th>
-                    <th>Min Temp</th>
-                    <th>Rain</th>
-                    <th>Shower</th>
-                    <th>Snow</th>
-                </tr>
-            </thead>
-            <tbody>`;
-
-    const tableBody = historyData.map(createRow).join('');
-    const tableFooter = `</tbody></table>`;
-
-    const historyTableElement = document.getElementById("historical");
-    historyTableElement.innerHTML = tableHeader + tableBody + tableFooter;
-}
-
-function createRow(data) {
-    return `
-        <tr>
-            <td>${data.date}</td>
-            <td>${data.maxTemp}°C</td>
-            <td>${data.minTemp}°C</td>
-            <td>${data.rain}mm</td>
-            <td>${data.shower}mm</td>
-            <td>${data.snow}cm</td>
-        </tr>`;
-}
-
-
-module.exports = { writeText, getLocation, getWeather, displayIcon, fetchHistoricalData, displayHistoricalData, createRow }

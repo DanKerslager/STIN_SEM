@@ -2,9 +2,8 @@
 
 //example call: curl -X POST https://pocasitest.netlify.app/.netlify/functions/api -H "Content-Type: application/json" -d "{\"email\":\"dan.kerslager@tul.cz\",\"password\":\"TestTest1\",\"location\":\"New York\"}"
 
-const { AuthenticationClient } = require('auth0');
 const axios = require('axios');
-const { getLocation, getWeather, fetchHistoricalData } = require('../../index.js')
+const { getLocation, getWeather, fetchHistoricalData } = require('../utils.js')
 
 const auth0Config = {
     domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
