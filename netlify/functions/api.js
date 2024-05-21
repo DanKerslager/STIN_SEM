@@ -4,6 +4,7 @@
 
 const { AuthenticationClient } = require('auth0');
 const axios = require('axios');
+const { getLocation, getWeather, fetchHistoricalData } = require('./index.js')
 
 const auth0Config = {
     domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
@@ -40,11 +41,14 @@ exports.handler = async function(event, context) {
         });
 
         const authResult = response.data;
+        const coordinates = await getLocation(location)
+        const weatherData = await getWeather(coordinates)
+        const historicalData = await fetchHistoricalData(coordinates)
 
         // Example response
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: 'Authentication successful', token: authResult.access_token }),
+            body: JSON.stringify({ message: 'Authentication successful', token: weatherData }),
         };
     } catch (error) {
         console.error('Error authenticating with Auth0:', error);
