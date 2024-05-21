@@ -4,7 +4,7 @@
 
 const { AuthenticationClient } = require('auth0');
 const axios = require('axios');
-const { getLocation, getWeather, fetchHistoricalData } = require('./index.js')
+const { getLocation, getWeather, fetchHistoricalData } = require('../../index.js')
 
 const auth0Config = {
     domain: 'dev-cz1xfrqlz4gbz633.us.auth0.com',
