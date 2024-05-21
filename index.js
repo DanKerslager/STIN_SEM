@@ -65,7 +65,6 @@ async function getWeather(coordinates) {
         }
         const data = await response.json();
         return data
-        displayIcon(data.weather[0].icon);
     } catch (error) {
         console.error(error);
     }

@@ -39,7 +39,6 @@ exports.handler = async function(event, context) {
             realm: auth0Config.connection  // Specify the connection here
         });
 
-        const authResult = response.data;
         const coordinates = await getLocation(location)
         const weatherData = await getWeather(coordinates)
         const historicalData = await fetchHistoricalData(coordinates)
