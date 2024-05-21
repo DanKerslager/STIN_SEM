@@ -75,3 +75,4 @@ async function fetchHistoricalData(coordinates) {
         console.error("Error fetching historical data:", error);
     }
 }
+module.exports = {getLocation, getWeather, fetchHistoricalData}
