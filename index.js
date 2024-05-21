@@ -3,8 +3,6 @@
 const appID = "&appid=3034449191d7e019ed5ee40277f84796"
 const weatherAPI = "https://api.openweathermap.org/data/2.5/weather?"
 const geoAPI = "https://api.openweathermap.org/geo/1.0/direct?q="
-const currentLocation = ""
-
 const historyAPI = "https://api.open-meteo.com/v1/forecast?"
 const historyAPISet = "&daily=temperature_2m_max,temperature_2m_min,rain_sum,showers_sum,snowfall_sum&timezone=auto&"
 
@@ -19,7 +17,8 @@ function writeText() {
     var outputDiv2 = document.getElementById("output2");
     // Append the input value to the output div
     outputDiv1.innerHTML = "You entered: " + inputValue;
-    getLocation(inputValue)
+    //getLocation(inputValue)
+    inputHandler(inputValue)
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,26 +31,32 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-async function getLocation(location) {
-    var requestString = geoAPI+location+"&limit=1"+appID
+async function inputHandler(location){
+    const coordinates = await getLocation(location)
+    const weatherData = await getWeather(coordinates)
+    displayIcon(weatherData.weather[0].icon)
     
+    const userDiv = document.getElementById('user');
+    if (userDiv.innerText.trim() !== '') {
+        const historicalData = await fetchHistoricalData(coordinates)
+        displayHistoricalData(historicalData)
+    }
+
+}
+
+async function getLocation(location) {
+    var requestString = geoAPI+location+"&limit=1"+appID   
     try {
         const response = await fetch(requestString);
         const data = await response.json();
-        const latitude = data[0].lat;
-        const longitude = data[0].lon;
-        getWeather(latitude, longitude);
-        const userDiv = document.getElementById('user');
-        if (userDiv.innerText.trim() !== '') {
-            fetchHistoricalData(latitude, longitude)
-        }
+        return [data[0].lat, data[0].lon];
     } catch (error) {
         console.error(error);
     }
 }
 
-async function getWeather(lat, lon) {
-    var requestString = weatherAPI + "lat=" + lat + "&lon=" + lon + appID
+async function getWeather(coordinates) {
+    var requestString = weatherAPI + "lat=" + coordinates[0] + "&lon=" + coordinates[1] + appID
     
     try {
         const response = await fetch(requestString);
@@ -59,7 +64,7 @@ async function getWeather(lat, lon) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
-        displayIcon(data.weather[0].icon);
+        return data
     } catch (error) {
         console.error(error);
     }
@@ -74,7 +79,7 @@ function displayIcon(code){
     imgfield.append(imgElement)
 }
 
-async function fetchHistoricalData(lat, lon) {
+async function fetchHistoricalData(coordinates) {
     const historyData = [];
     const fetchPromises = [];
 
@@ -83,7 +88,7 @@ async function fetchHistoricalData(lat, lon) {
         date.setDate(date.getDate() - i); // Adjusting date by subtracting i days for historical data
         const formattedDate = date.toISOString().split('T')[0];
 
-        const url = `${historyAPI}latitude=${lat}&longitude=${lon}${historyAPISet}start_date=${formattedDate}&end_date=${formattedDate}`;
+        const url = `${historyAPI}latitude=${coordinates[0]}&longitude=${coordinates[1]}${historyAPISet}start_date=${formattedDate}&end_date=${formattedDate}`;
         
         // Collecting fetch promises
         fetchPromises.push(
@@ -112,7 +117,7 @@ async function fetchHistoricalData(lat, lon) {
             });
         });
 
-        displayHistoricalData(historyData);
+        return historyData;
     } catch (error) {
         console.error("Error fetching historical data:", error);
     }
@@ -154,4 +159,4 @@ function createRow(data) {
 }
 
 
-export{ writeText, getLocation, getWeather, displayIcon, fetchHistoricalData, displayHistoricalData, createRow }
+module.exports = { writeText, getLocation, getWeather, displayIcon, fetchHistoricalData, displayHistoricalData, createRow }

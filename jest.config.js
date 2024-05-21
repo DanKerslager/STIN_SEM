@@ -9,5 +9,6 @@ module.exports = {
     moduleNameMapper: {
       '\\.(css|less)$': 'identity-obj-proxy',
     },
+    roots: ['<rootDir>', '<rootDir>/netlify', '<rootDir>/netlify/functions']
   };
   
