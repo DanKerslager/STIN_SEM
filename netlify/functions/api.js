@@ -44,10 +44,15 @@ exports.handler = async function(event, context) {
         const weatherData = await getWeather(coordinates)
         const historicalData = await fetchHistoricalData(coordinates)
 
+        const returnToken = {
+            current: weatherData,
+            historical: historicalData
+        }
+
         // Example response
         return {
             statusCode: 200,
-            body: JSON.stringify({ message: 'Authentication successful', token: weatherData }),
+            body: JSON.stringify({ message: 'Authentication successful', token: returnToken }),
         };
     } catch (error) {
         console.error('Error authenticating with Auth0:', error);
