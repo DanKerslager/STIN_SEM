@@ -3,6 +3,9 @@ module.exports = {
     transform: {
       '^.+\\.jsx?$': 'babel-jest',
     },
+    collectCoverage: true,
+    coverageDirectory: 'coverage',
+    coverageReporters: ['text', 'lcov'],
     testEnvironment: 'jsdom',
     moduleFileExtensions: ['js', 'jsx'],
     moduleDirectories: ['node_modules'],
