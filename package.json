@@ -19,6 +19,7 @@
     "jest": "^29.7.0"
   },
   "devDependencies": {
+    "jest": "^29.0.0"
     "@babel/core": "^7.24.5",
     "@babel/preset-env": "^7.24.5",
     "auth0-js": "^9.26.0",
